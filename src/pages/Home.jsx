@@ -1,36 +1,9 @@
 import React from 'react';
 import HomePageBanner from '../components/HomePageBanner';
 import ProductCard from '../components/ProductCard';
-import plantImage from '../assets/plant.jpeg';
+import { dummyProducts } from '../data/dummyProducts';
 
 const Home = () => {
-
-  const dummyProducts = [
-    {
-        id: 1,
-        name: 'Aloe Vera',
-        price: '₹150',
-        image: plantImage
-    },
-    {
-        id: 2,
-        name: 'Snake Plant',
-        price: '₹200',
-        image: plantImage
-    },
-    {
-        id: 3,
-        name: 'Peace Lily',
-        price: '₹250',
-        image: plantImage
-    },
-    {
-        id: 4,
-        name: 'Money Plant',
-        price: '₹180',
-        image: plantImage
-    }
- ];
 
   return (
     <div className="px-4 py-6 space-y-10">
