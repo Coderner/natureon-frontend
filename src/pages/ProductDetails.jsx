@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { dummyProducts } from '../data/dummyProducts';
 import BreadCrumb from '../components/BreadCrumb';
+import QuantityUpdateButton from '../components/QuantityUpdateButton';
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -77,24 +78,8 @@ const ProductDetails = () => {
 
             {/* Quantity */}
             <div className="mb-6">
-              <p className="text-sm font-medium text-gray-700 mb-1">Quantity</p>
-              <div className="flex items-center">
-                <button
-                  onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
-                  className="px-3 py-1 bg-gray-200 rounded-l-2xl hover:bg-gray-300 text-lg border border-gray-300"
-                >
-                  −
-                </button>
-
-                <div className="text-lg font-medium px-3 py-1 text-center border-y border-gray-300">{quantity}</div>
-
-                <button
-                  onClick={() => setQuantity((prev) => prev + 1)}
-                  className="px-3 py-1 bg-gray-200 rounded-r-2xl hover:bg-gray-300 text-lg border border-gray-300"
-                >
-                  +
-                </button>
-              </div>
+                <p className="text-sm font-medium text-gray-700 mb-1">Quantity</p>
+                <QuantityUpdateButton quantity={quantity} setQuantity={setQuantity}/>
             </div>
 
             {/* Action Buttons */}
