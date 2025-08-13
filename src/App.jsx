@@ -5,17 +5,27 @@ import Products from './pages/Products';
 import ProductDetails from './pages/ProductDetails';
 import CustomerLayout from './layouts/CustomerLayout';
 import Cart from './pages/Cart';
+import AdminLayout from './layouts/AdminLayout';
+import ProductForm from './pages/admin/ProductForm';
 
 function App() {
 
   return (
     <Routes>
+
+      {/* Customer Routes */}
       <Route element={<CustomerLayout />}>
           <Route path="/" element={<Home/>} />
           <Route path="/products" element={<Products/>}/>
           <Route path="/product/:id" element={<ProductDetails/>}/>
           <Route path="/cart" element={<Cart/>}/>
       </Route>
+
+      {/* Admin Routes */}
+      <Route path="/admin" element={<AdminLayout />}>
+        <Route path="products/new" element={<ProductForm />} />      
+      </Route>
+
     </Routes>
   )
 }
