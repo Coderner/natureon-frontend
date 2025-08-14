@@ -1,30 +1,17 @@
 import React from "react";
 import { FaShoppingCart } from "react-icons/fa";
+import { categories } from "../data/categories";
 
 const Navbar = () => {
 
-  const categories = [
-    { label: "All", value: "" },
-    { label: "Bird House", value: "bird-house" },
-    { label: "Fertilizer", value: "fertilizer" },
-    { label: "Gardening Accessories", value: "gardening-accessories" },
-    { label: "Gardening Tools", value: "gardening-tools" },
-    { label: "Hanging Decor", value: "hanging-decor" },
-    { label: "Hanging Planter", value: "hanging-planter" },
-    { label: "Metal Planter", value: "metal-planter" },
-    { label: "Metal Stand", value: "metal-stand" },
-    { label: "Plant", value: "plant" },
-    { label: "Plant Care", value: "plant-care" },
-    { label: "Plant Diet", value: "plant-diet" },
-    { label: "Plant Stand", value: "plant-stand" },
-    { label: "Planter Stand", value: "planter-stand" },
-    { label: "Plastic Pot", value: "plastic-pot" },
-    { label: "Potting Mix", value: "potting-mix" },
-    { label: "Pressure Sprayer", value: "pressure-sprayer" },
-    { label: "Seeds", value: "seeds" },
-    { label: "Compost", value: "compost" },
-    { label: "Wooden Stand", value: "wooden-stand" },
-  ];
+  const subCategories = categories.flatMap((category) =>{
+     return(category.subcategories.map((subcategory)=>{
+          return subcategory
+     }))
+  });
+
+
+  console.log(subCategories);
 
   return (
     <nav className="bg-white shadow px-4 py-3 flex items-center justify-between">
@@ -33,11 +20,11 @@ const Navbar = () => {
         Nature<span className="text-gray-700">On</span>
       </div>
 
-      {/* Search with Categories */}
+      {/* Search with Sub-categories */}
       <select className="border px-2 py-1 rounded-l bg-white text-sm text-gray-700">
-        {categories.map((category) => (
-          <option key={category.value} value={category.value}>
-            {category.label}
+        {subCategories.map((subcategory) => (
+          <option key={subcategory} value={subcategory}>
+            {subcategory}
           </option>
         ))}
       </select>
