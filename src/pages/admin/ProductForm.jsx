@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import FormInput from '../../components/FormInput';
 import { categories } from "../../data/categories";
+import { createProduct } from '../../api/productApi';
 
 const ProductForm = () => {
 
@@ -37,10 +38,10 @@ const ProductForm = () => {
     (cat) => cat.name === formData.category
   );
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    console.log(formData); 
-    alert("Form submitted! (UI only)");
+    const res = await createProduct({...formData, images:images})
+    console.log(res); 
   };
 
   return (
