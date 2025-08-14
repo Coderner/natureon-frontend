@@ -1,12 +1,20 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const ProductCard = ({product}) => {
   return (
-    <div className="p-4 border rounded shadow-sm text-center">
-        <img src={product?.image} alt={product?.name} className="w-full h-32 object-cover mb-2"/>
-        <h3 className="font-semibold">{product?.name}</h3>
-        <h4 className="text-sm text-gray-500">{product.price}</h4>
-        <button className="mt-2 px-3 py-1 bg-green-600 text-white rounded">Buy Now</button>
+    <div className="py-4 rounded-lg shadow-xl">
+        <img src={product?.image} alt={product?.name} className="w-full max-h-5/6 rounded-lg object-cover mb-2"/>
+        <div className='px-4 sm:flex justify-between items-end'>     
+            <div>    
+              <h3 className="font-semibold text-lg">{product?.name}</h3>
+              <h4 className="text-lg font-semibold text-gray-500">{product.price}</h4>    
+              <Link to="">
+                  <p className='text-sm underline text-sky-600 font-semibold'>View More Details</p>
+              </Link>
+            </div>   
+            <button className="px-3 py-1 bg-green-600 text-white rounded-lg mt-2 sm:mt-0">Buy Now</button>      
+        </div>
     </div>
   )
 }

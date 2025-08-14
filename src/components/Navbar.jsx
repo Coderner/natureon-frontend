@@ -1,6 +1,7 @@
 import React from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import { categories } from "../data/categories";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
 
@@ -14,14 +15,16 @@ const Navbar = () => {
   console.log(subCategories);
 
   return (
-    <nav className="bg-white shadow px-4 py-3 flex items-center justify-between">
+    <nav className="bg-white shadow px-4 py-6 flex items-center justify-between sticky top-0 z-50">
       {/* Logo */}
-      <div className="text-2xl font-bold text-green-700">
-        Nature<span className="text-gray-700">On</span>
-      </div>
+      <Link to="/">
+        <div className="text-3xl font-bold text-green-700">
+          Nature<span className="text-gray-700">On</span>
+        </div>
+      </Link>
 
       {/* Search with Sub-categories */}
-      <select className="border px-2 py-1 rounded-l bg-white text-sm text-gray-700">
+      <select className="border p-2 rounded-lg bg-white text-gray-700 md:w-1/2">
         {subCategories.map((subcategory) => (
           <option key={subcategory} value={subcategory}>
             {subcategory}

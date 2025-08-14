@@ -6,12 +6,12 @@ import { dummyProducts } from '../data/dummyProducts';
 const Home = () => {
 
   return (
-    <div className="px-4 py-6 space-y-10">
+    <div className="space-y-10">
         <HomePageBanner/>
 
         {/* BestSellers */}
-        <section>
-            <h2 className="text-xl font-semibold mb-4">Bestsellers</h2>
+        <section className='px-4'>
+            <h2 className="text-2xl font-semibold mb-4">Check Out Latest Collection</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                 {dummyProducts.map((product)=>(
                     <ProductCard product={product}/>
