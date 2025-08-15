@@ -7,6 +7,7 @@ import CustomerLayout from './layouts/CustomerLayout';
 import Cart from './pages/Cart';
 import AdminLayout from './layouts/AdminLayout';
 import ProductForm from './pages/admin/ProductForm';
+import Checkout from './pages/Checkout';
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
           <Route path="/products" element={<Products/>}/>
           <Route path="/product/:id" element={<ProductDetails/>}/>
           <Route path="/cart" element={<Cart/>}/>
+          <Route path="/checkout" element={<Checkout/>}/>
       </Route>
 
       {/* Admin Routes */}

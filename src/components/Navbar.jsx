@@ -33,12 +33,14 @@ const Navbar = () => {
       </select>
 
       {/* Cart Icon */}
-      <div className="relative cursor-pointer">
-        <FaShoppingCart className="text-xl text-gray-700" />
-        <span className="absolute -top-2 -right-2 bg-green-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
-          2
-        </span>
-      </div>
+      <Link to="/cart">
+          <div className="relative cursor-pointer">
+            <FaShoppingCart className="text-xl text-gray-700" />
+            <span className="absolute -top-2 -right-2 bg-green-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+              2
+            </span>
+          </div>
+      </Link> 
     </nav>
   );
 };

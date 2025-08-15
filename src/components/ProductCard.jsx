@@ -8,12 +8,14 @@ const ProductCard = ({product}) => {
         <div className='px-4 sm:flex justify-between items-end'>     
             <div>    
               <h3 className="font-semibold text-lg">{product?.name}</h3>
-              <h4 className="text-lg font-semibold text-gray-500">{product.price}</h4>    
-              <Link to="">
+              <h4 className="text-lg font-semibold text-gray-500">{product?.price}</h4>    
+              <Link to={`/product/${product?._id}`}>
                   <p className='text-sm underline text-sky-600 font-semibold'>View More Details</p>
               </Link>
-            </div>   
-            <button className="px-3 py-1 bg-green-600 text-white rounded-lg mt-2 sm:mt-0">Buy Now</button>      
+            </div> 
+            <Link to="/checkout">
+                <button className="px-3 py-1 bg-green-600 text-white rounded-lg mt-2 sm:mt-0">Buy Now</button>      
+            </Link>  
         </div>
     </div>
   )

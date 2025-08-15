@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import plantImage from '../assets/plant.jpeg'; 
 import QuantityUpdateButton from '../components/QuantityUpdateButton';
+import { Link } from 'react-router-dom';
 
 const initialCart = [
   {
@@ -91,9 +92,11 @@ const CartPage = () => {
           <p className="mb-2">Total Items: {cartItems.reduce((sum, item) => sum + item.quantity, 0)}</p>
           <p className="mb-4 text-lg font-semibold">Total: ₹{totalAmount}</p>
 
-          <button className="bg-green-600 text-white w-full py-2 rounded hover:bg-green-700 font-semibold">
-            Proceed to Checkout
-          </button>
+          <Link to="/checkout">
+            <button className="bg-green-600 text-white w-full py-2 rounded hover:bg-green-700 font-semibold">
+              Proceed to Checkout
+            </button>
+          </Link>
         </div>
       </div>
     </div>
