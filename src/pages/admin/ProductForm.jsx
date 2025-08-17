@@ -1,9 +1,12 @@
-import React, {useState} from 'react'
+import {useState} from 'react'
 import FormInput from '../../components/FormInput';
 import { categories } from "../../data/categories";
 import { createProduct } from '../../api/productApi';
+import { useNavigate } from "react-router-dom";
 
 const ProductForm = () => {
+
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
         name: "",
@@ -40,8 +43,25 @@ const ProductForm = () => {
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-    const res = await createProduct({...formData, images:images})
-    console.log(res); 
+    const data = new FormData();
+
+    Object.keys(formData).forEach((key) => {
+        data.append(key, formData[key]);
+    });
+
+    images.forEach((image) => {
+        data.append("images", image); 
+    });
+
+
+    try {
+        const res = await createProduct(data);
+        console.log(res.data);
+         navigate("/");
+    } catch (err) {
+        console.error("Error creating product:", err);
+    }
+
   };
 
   return (

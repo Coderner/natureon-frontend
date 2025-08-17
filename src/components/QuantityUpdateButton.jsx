@@ -1,5 +1,3 @@
-import React from 'react'
-
 const QuantityUpdateButton = ({quantity,setQuantity}) => {
   return (
         <div className="flex items-center">

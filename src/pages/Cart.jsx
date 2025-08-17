@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import plantImage from '../assets/plant.jpeg'; 
 import QuantityUpdateButton from '../components/QuantityUpdateButton';
 import { Link } from 'react-router-dom';

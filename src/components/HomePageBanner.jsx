@@ -1,5 +1,3 @@
-import React from 'react'
-import Image from "../assets/plant.jpeg";
 import PlantAccessories from "../assets/plantaccessories.webp";
 import GreenifySpace from "../assets/greenifyspace.jpg";
 import Nurture from "../assets/nurture.jpg";

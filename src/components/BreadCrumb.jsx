@@ -1,5 +1,3 @@
-import React from 'react'
-
 const BreadCrumb = ({ items }) => {
   return (
     <nav className="flex items-center space-x-1 text-sm">
