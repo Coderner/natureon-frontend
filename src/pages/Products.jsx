@@ -1,12 +1,23 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { dummyProducts } from '../data/dummyProducts'
 import FilterSideBar from '../components/FilterSideBar'
 import ProductCard from '../components/ProductCard'
 import BreadCrumb from '../components/BreadCrumb'
+import { getProducts } from '../api/productApi'
 
 const Products = () => {
 
   const [showFilter, setShowFilter] = useState(false);
+  const [products,setProducts] = useState([]);
+
+  async function fetchProducts(){
+    const res = await getProducts();
+    setProducts(res?.data);
+  }
+
+  useEffect(()=>{
+     fetchProducts();
+  },[])
 
   return (
      <div>
@@ -57,7 +68,7 @@ const Products = () => {
           <p className="text-gray-600 mb-6">Explore our collection of eco-friendly and decorative plant accessories curated just for you.</p>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {dummyProducts.map(product => (
+            {products?.map(product => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
