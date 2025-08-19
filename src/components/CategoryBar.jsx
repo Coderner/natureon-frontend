@@ -1,13 +1,22 @@
-import { categories } from '../data/categories'
+import { useCategories } from "../context/CategoriesContext";
+import { useNavigate } from "react-router-dom";
 
 const CategoryBar = () => {
+
+  const { categories} = useCategories();
+  const navigate = useNavigate();
+
+  const handleCategoryClick = (categoryId) => {
+    navigate(`/products?category=${categoryId}`);
+  };
 
   return (
      <div className="w-full overflow-x-auto bg-gray-100 py-4 shadow-sm">
       <div className="flex gap-4 px-4 sm:px-8">
         {categories.map((category) => (
           <button 
-             key={category.name}
+            key={category._id}
+            onClick={() => handleCategoryClick(category._id)}
             className="px-5 py-2 bg-white rounded-full font-semibold shadow hover:bg-green-600 hover:text-white hover:cursor-pointer transition whitespace-nowrap"
           >
             {category.name}

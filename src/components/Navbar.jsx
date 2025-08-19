@@ -1,12 +1,20 @@
 import { FaShoppingCart } from "react-icons/fa";
-import { categories } from "../data/categories";
 import { Link } from "react-router-dom";
+import { useCategories } from "../context/CategoriesContext";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
 
-  const subCategories = categories.flatMap((category) =>{
+  const { categories} = useCategories();
+  const navigate = useNavigate();
+
+  const handleSubCategoryClick = (subcategory) => {
+    navigate(`/products?subcategory=${subcategory}`);
+  };
+
+  const subCategories = categories?.flatMap((category) =>{
      return(category.subcategories.map((subcategory)=>{
-          return subcategory
+          return subcategory;
      }))
   });
 
@@ -23,9 +31,15 @@ const Navbar = () => {
       </Link>
 
       {/* Search with Sub-categories */}
-      <select className="border p-2 rounded-lg bg-white text-gray-700 md:w-1/2">
+      <select 
+        className="border p-2 rounded-lg bg-white text-gray-700 md:w-1/2"
+        onChange={(e) => handleSubCategoryClick(e.target.value)}
+      >
         {subCategories.map((subcategory) => (
-          <option key={subcategory} value={subcategory}>
+          <option 
+            key={subcategory} 
+            value={subcategory} 
+          >
             {subcategory}
           </option>
         ))}

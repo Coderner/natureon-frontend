@@ -3,17 +3,32 @@ import ProductCard from '../components/ProductCard'
 import BreadCrumb from '../components/BreadCrumb'
 import { getProducts } from '../api/productApi'
 import Spinner from '../components/Spinner'
+import { useLocation } from "react-router-dom";
 
 const Products = () => {
 
   const [products,setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const location = useLocation();
+
+  const queryParams = new URLSearchParams(location.search);
+  const category = queryParams.get("category");
+  const subcategory = queryParams.get("subcategory");
+  const filters = {}
+
+  if (category) {
+    filters.category = category; 
+  }
+
+  if (subcategory) {
+    filters.subcategory = subcategory; 
+  }
 
   async function fetchProducts(){
     try{
       setLoading(true);
-      const res = await getProducts();
+      const res = await getProducts(filters);
       setProducts(res?.data);
       setError(null);
     }catch(err){
@@ -26,7 +41,7 @@ const Products = () => {
 
   useEffect(()=>{
      fetchProducts();
-  },[])
+  },[category, subcategory])
 
   return (
      <div>
@@ -49,12 +64,18 @@ const Products = () => {
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
             {
               loading ? (
-                <div className="w-full flex justify-center">
+                <div className="w-full flex items-center justify-center col-span-full">
                   <Spinner/>
                 </div>
               ) : 
               error ? (
                 <p className="text-center text-red-500">{error}</p>
+              ) 
+              : products.length === 0 ? (
+                <div className="w-full flex flex-col items-center justify-center col-span-full py-10">
+                  <p className="text-gray-500 text-lg font-medium">No products found</p>
+                  <p className="text-gray-400 text-sm">Try changing your filters or search</p>
+                </div>
               ) :
               (
                  products?.map(product => (

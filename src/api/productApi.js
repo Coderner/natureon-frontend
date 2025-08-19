@@ -13,8 +13,10 @@ export const updateProduct = async (id, formData) => {
   return response.data;
 };
 
-export const getProducts = async () => {
-  const response = await axios.get(API_ROUTE);
+export const getProducts = async (filters = {}) => {
+  const params = new URLSearchParams(filters).toString();
+   const url = params ? `${API_ROUTE}?${params}` : API_ROUTE;
+  const response = await axios.get(url);
   return response.data;
 };
 
