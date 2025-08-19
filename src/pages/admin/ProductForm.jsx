@@ -1,12 +1,13 @@
 import {useState} from 'react'
 import FormInput from '../../components/FormInput';
-import { categories } from "../../data/categories";
 import { createProduct } from '../../api/productApi';
 import { useNavigate } from "react-router-dom";
+import { useCategories } from "../../context/CategoriesContext";
 
 const ProductForm = () => {
 
   const navigate = useNavigate();
+  const { categories} = useCategories();
 
   const [formData, setFormData] = useState({
         name: "",
@@ -38,7 +39,7 @@ const ProductForm = () => {
   };
 
   const selectedCategory = categories.find(
-    (cat) => cat.name === formData.category
+    (cat) => cat._id === formData.category
   );
 
   const handleSubmit = async(e) => {
@@ -137,7 +138,7 @@ const ProductForm = () => {
                     >
                     <option value="">Select Category</option>
                     {categories.map((cat) => (
-                        <option key={cat.name} value={cat.name}>
+                        <option key={cat?._id} value={cat?._id}>
                         {cat.name}
                         </option>
                     ))}

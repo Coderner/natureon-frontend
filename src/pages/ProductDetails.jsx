@@ -5,6 +5,7 @@ import QuantityUpdateButton from '../components/QuantityUpdateButton';
 import { getProductById } from '../api/productApi';
 import Spinner from "../components/Spinner";
 import placeholderImage from "../assets/placeholder.jpeg"
+import { useCategories } from "../context/CategoriesContext";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -13,11 +14,15 @@ const ProductDetails = () => {
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const {categories} = useCategories();
+
+  const categoryName = categories.find((cat)=>cat?._id===product?.category)?.name;
   
   async function fetchProductById(){
     try{
         setLoading(true);
         const res = await getProductById(id);
+        console.log(res);
         setProduct(res?.data);
         setSelectedImage(res?.data?.images[0] || placeholderImage);
         setError(null);
@@ -83,7 +88,7 @@ const ProductDetails = () => {
 
                 <h1 className="text-4xl font-bold">{product?.name}</h1>
                 <p className=" text-gray-500 font-medium">
-                  {`${product?.category} | ${product?.subcategory} | ${product?.description}`}
+                  {`${categoryName} | ${product?.subcategory} | ${product?.description}`}
                 </p>
                 <p className="text-4xl font-semibold"> 
                   {

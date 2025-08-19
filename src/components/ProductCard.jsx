@@ -1,10 +1,14 @@
 import { Link } from 'react-router-dom'
 import placeholderImage from "../assets/placeholder.jpeg"
+import { useCategories } from '../context/CategoriesContext';
 
 const ProductCard = ({product}) => {
 
   const {_id, images, name, price, category} = product;
   const imageUrl = images[0] || placeholderImage;
+  const {categories} = useCategories();
+  
+  const categoryName = categories.find((cat)=>cat?._id===category)?.name;
 
   return (
     <Link to={`/product/${_id}`}>
@@ -14,14 +18,14 @@ const ProductCard = ({product}) => {
               <div> 
                 <div className='flex gap-1 items-end'>
                     <h3 className="text-xl font-semibold">{name}</h3>
-                    <h5 className='hidden xl:block text-gray-700'>({category})</h5>
+                    <h5 className='hidden xl:block text-gray-700'>({categoryName})</h5>
                 </div>
                 <h4 className="text-2xl font-bold text-gray-700 mt-1">
                    {
                       new Intl.NumberFormat("en-IN", {
                         style: "currency",
                         currency: "INR"
-                      }).format(product?.price)
+                      }).format(price)
                     }  
                 </h4> 
               </div>    
