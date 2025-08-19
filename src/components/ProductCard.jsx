@@ -14,7 +14,7 @@ const ProductCard = ({product}) => {
               <div> 
                 <div className='flex gap-1 items-end'>
                     <h3 className="text-xl font-semibold">{name}</h3>
-                    <h5 className='hidden lg:block text-gray-700'>({category})</h5>
+                    <h5 className='hidden xl:block text-gray-700'>({category})</h5>
                 </div>
                 <h4 className="text-2xl font-bold text-gray-700 mt-1">
                    {
