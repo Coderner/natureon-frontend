@@ -6,6 +6,7 @@ import { getProductById } from '../api/productApi';
 import Spinner from "../components/Spinner";
 import placeholderImage from "../assets/placeholder.jpeg"
 import { useCategories } from "../context/CategoriesContext";
+import { useCart } from "../context/CartContext";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -15,6 +16,8 @@ const ProductDetails = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const {categories} = useCategories();
+  const { addToCart } = useCart();
+
 
   const categoryName = categories.find((cat)=>cat?._id===product?.category)?.name;
   
@@ -99,7 +102,10 @@ const ProductDetails = () => {
                   }
                 </p>
                 <QuantityUpdateButton quantity={quantity} setQuantity={setQuantity}/>
-                <Link to="/cart">
+                <Link 
+                   to="/cart"
+                   onClick={() => addToCart(product, quantity)}
+                >
                     <button className="w-2/3 bg-green-600 text-white font-semibold px-6 py-2 rounded-2xl hover:bg-green-700 hover:cursor-pointer">
                       Add to Cart
                     </button>

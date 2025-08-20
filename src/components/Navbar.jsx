@@ -2,9 +2,10 @@ import { FaShoppingCart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useCategories } from "../context/CategoriesContext";
 import { useNavigate } from "react-router-dom";
+import { useCart } from "../context/CartContext";
 
 const Navbar = () => {
-
+  const {cartItems} = useCart();
   const { categories} = useCategories();
   const navigate = useNavigate();
 
@@ -50,7 +51,7 @@ const Navbar = () => {
           <div className="relative cursor-pointer">
             <FaShoppingCart className="text-xl text-gray-700" />
             <span className="absolute -top-2 -right-2 bg-green-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
-              2
+              {cartItems.length}
             </span>
           </div>
       </Link> 
