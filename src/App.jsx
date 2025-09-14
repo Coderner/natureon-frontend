@@ -8,6 +8,7 @@ import Cart from './pages/Cart';
 import AdminLayout from './layouts/AdminLayout';
 import ProductForm from './pages/admin/ProductForm';
 import Checkout from './pages/Checkout';
+import AdminLogin from './pages/admin/AdminLogin';
 
 function App() {
 
@@ -25,7 +26,8 @@ function App() {
 
       {/* Admin Routes */}
       <Route path="/admin" element={<AdminLayout />}>
-        <Route path="products/new" element={<ProductForm />} />      
+        <Route path="login" element={<AdminLogin/>}/>
+        <Route path="upload-product" element={<ProductForm />} />      
       </Route>
 
     </Routes>

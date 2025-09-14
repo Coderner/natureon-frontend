@@ -5,13 +5,16 @@ import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'
 import { CategoriesProvider } from './context/CategoriesContext.jsx'
 import { CartProvider } from './context/CartContext.jsx'
+import { AdminProvider } from './context/AdminContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <CategoriesProvider>
         <CartProvider>
+          <AdminProvider>
             <App />
+          </AdminProvider>
         </CartProvider>
       </CategoriesProvider>
     </BrowserRouter>

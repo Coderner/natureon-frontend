@@ -13,7 +13,7 @@ const CategoryBar = () => {
   return (
      <div className="w-full overflow-x-auto bg-gray-100 py-4 shadow-sm">
       <div className="flex gap-4 px-4 sm:px-8">
-        {categories.map((category) => (
+        {categories?.map((category) => (
           <button 
             key={category._id}
             onClick={() => handleCategoryClick(category._id)}
