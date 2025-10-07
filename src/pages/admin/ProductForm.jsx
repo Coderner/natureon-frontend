@@ -2,12 +2,13 @@ import {useState} from 'react'
 import FormInput from '../../components/FormInput';
 import { createProduct } from '../../api/productApi';
 import { useNavigate } from "react-router-dom";
-import { useCategories } from "../../context/CategoriesContext";
+import { useCategories } from '../../context/CategoriesContext';
 
 const ProductForm = () => {
 
   const navigate = useNavigate();
   const { categories} = useCategories();
+  console.log(categories);
 
   const [formData, setFormData] = useState({
         name: "",
@@ -137,7 +138,7 @@ const ProductForm = () => {
                     className="border rounded px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-400"
                     >
                     <option value="">Select Category</option>
-                    {categories.map((cat) => (
+                    {categories?.map((cat) => (
                         <option key={cat?._id} value={cat?._id}>
                         {cat.name}
                         </option>

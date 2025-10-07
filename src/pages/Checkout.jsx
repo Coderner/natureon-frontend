@@ -1,6 +1,16 @@
 import { useState } from "react";
+import { useCart } from "../context/CartContext";
+import { createOrder } from "../api/orderApi";
+import { useLocation } from "react-router-dom";
 
 const Checkout = () => {
+  const {cartItems, clearCart} = useCart();
+  const location = useLocation();
+  const buyNowItem = location.state?.buyNowProduct ?? null;
+
+  const itemsToCheckout = buyNowItem ? [buyNowItem] : cartItems;
+  const total = itemsToCheckout?.reduce((sum,item)=> sum+item.price*item.quantity,0);
+
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -15,11 +25,28 @@ const Checkout = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Order submitted:", formData);
-    // TODO: send data to backend -> create order -> payment
-  };
+    const orderData = {
+      ...formData, 
+      items: itemsToCheckout?.map((item) => ({
+        productId: item._id,   
+        name: item.name,
+        price: item.price,
+        quantity: item.quantity,
+      })),
+      totalAmount: total,
+    };
+
+    try {
+      const response = await createOrder(orderData);
+      console.log("Order created:", response);
+      clearCart();
+      clearBuyNowItem();
+    } catch (error) {
+      console.error("Failed to create order:", error);
+    }
+  }
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8 grid md:grid-cols-3 gap-8">
@@ -103,19 +130,17 @@ const Checkout = () => {
       <div className="bg-gray-50 p-6 shadow rounded-lg">
         <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
         <div className="space-y-2">
-          <div className="flex justify-between">
-            <span>Product 1</span>
-            <span>₹500</span>
-          </div>
-          <div className="flex justify-between">
-            <span>Product 2</span>
-            <span>₹300</span>
-          </div>
+          {itemsToCheckout?.map((item)=>(
+              <div key={item._id} className="flex justify-between">
+                <span>{item.name} * {item.quantity}</span>
+                <span>₹{item.price * item.quantity}</span>
+              </div>
+          ))}
         </div>
         <hr className="my-4" />
         <div className="flex justify-between font-bold text-lg">
           <span>Total</span>
-          <span>₹800</span>
+          <span>₹{total}</span>
         </div>
       </div>
     </div>

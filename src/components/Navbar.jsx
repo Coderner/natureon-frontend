@@ -21,9 +21,6 @@ const Navbar = () => {
      }))
   });
 
-
-  console.log(subCategories);
-
   return (
     <nav className="bg-white shadow px-4 py-6 flex items-center justify-between sticky top-0 z-50">
       {/* Logo */}
@@ -52,14 +49,14 @@ const Navbar = () => {
       <div className="flex items-end gap-4">
         {!isAdmin ? (
           <button
-            className="px-2 py-1 bg-green-600 text-white rounded-lg"
+            className="px-2 py-1 bg-green-600 text-white rounded-lg cursor-pointer"
             onClick={() => navigate("/admin/login")}
           >
             Admin Login
           </button>
         ) : (
           <button
-            className="px-4 py-2 bg-blue-600 text-white rounded"
+            className="px-4 py-1 bg-green-600 text-white rounded-lg cursor-pointer"
             onClick={() => navigate("/admin/upload-product")}
           >
             Upload Products

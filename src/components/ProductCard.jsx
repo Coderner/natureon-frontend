@@ -1,17 +1,26 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import placeholderImage from "../assets/placeholder.jpeg"
 import { useCategories } from '../context/CategoriesContext';
+import { useCart } from "../context/CartContext";
 
 const ProductCard = ({product}) => {
 
   const {_id, images, name, price, category} = product;
   const imageUrl = images[0] || placeholderImage;
   const {categories} = useCategories();
+  const { handleBuyNow, clearBuyNowItem} = useCart();
+  const navigate = useNavigate();
   
   const categoryName = categories.find((cat)=>cat?._id===category)?.name;
 
+  const onBuyNow = (e) => {
+    e.preventDefault(); 
+    e.stopPropagation();
+    navigate("/checkout", { state: { buyNowProduct: { ...product, quantity: 1 } } });
+  };
+
   return (
-    <Link to={`/product/${_id}`}>
+    <Link to={`/product/${_id}`} title="Click to view details">
       <div className="py-2 rounded-lg shadow-xl h-80 sm:h-72 transition-transform duration-300 hover:scale-105 overflow-hidden">
           <img src={imageUrl} alt={name} className="w-full h-44 object-contain mb-2"/>
           <div className='flex-1 px-4 flex flex-col sm:flex-row justify-between sm:items-end'>   
@@ -29,11 +38,9 @@ const ProductCard = ({product}) => {
                     }  
                 </h4> 
               </div>    
-              <Link to="/checkout">
-                  <button className="px-4 py-2 bg-green-600 text-white rounded-xl mt-2 sm:mt-0">
-                    Buy Now
-                  </button>      
-              </Link>  
+              <button onClick={onBuyNow} className="px-4 py-2 bg-green-600 text-white rounded-xl mt-2 sm:mt-0 cursor-pointer">
+                Buy Now
+              </button>      
           </div>
       </div>
     </Link>
