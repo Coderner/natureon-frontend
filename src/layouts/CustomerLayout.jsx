@@ -2,6 +2,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import CategoryBar from '../components/CategoryBar';
 import { Outlet } from 'react-router-dom';
+import WhatsAppChatButton from '../components/WhatsappChatButton';
 
 const CustomerLayout = () => {
   return (
@@ -12,6 +13,7 @@ const CustomerLayout = () => {
              <Outlet/>
          </main>
          <Footer/>
+         <WhatsAppChatButton phoneNumber="919336322822" message="Hi, I have a query!" />
     </div>
   )
 }

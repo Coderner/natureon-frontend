@@ -121,12 +121,13 @@ const ProductForm = () => {
                 </div>
 
                 <FormInput
-                    label="Price"
+                    label="Price (in INR)"
                     name="price"
                     type="text"
                     value={formData.price}
                     onChange={handleChange}
                     placeholder="20"
+                    prefix="₹" 
                 />
 
                 <div className="mb-4">

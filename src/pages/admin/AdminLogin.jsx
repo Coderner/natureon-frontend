@@ -46,7 +46,7 @@ const AdminLogin = () => {
     <div className="flex justify-center">
       <div className="p-6 w-full md:w-1/2 shadow-sm rounded-2xl mt-20 bg-white">
         <div className="border-b border-green-700 mb-4 pb-2">
-          <h1 className="text-2xl font-bold text-gray-600">Admin Login</h1>
+          <h1 className="text-2xl font-bold text-gray-600">Login as Seller</h1>
         </div>
         <form className="w-full py-2 space-y-4" onSubmit={handleSubmit}>
           <div>

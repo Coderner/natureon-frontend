@@ -32,7 +32,7 @@ const Navbar = () => {
 
       {/* Search with Sub-categories */}
       <select 
-        className="border p-2 rounded-lg bg-white text-gray-700 md:w-1/2"
+        className="hidden md:block border p-2 rounded-lg bg-white text-gray-700 md:w-1/2"
         onChange={(e) => handleSubCategoryClick(e.target.value)}
       >
         {subCategories?.map((subcategory) => (
@@ -52,7 +52,7 @@ const Navbar = () => {
             className="px-2 py-1 bg-green-600 text-white rounded-lg cursor-pointer"
             onClick={() => navigate("/admin/login")}
           >
-            Admin Login
+            Seller Login
           </button>
         ) : (
           <button
