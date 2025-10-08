@@ -1,14 +1,13 @@
 import { Link, useNavigate } from 'react-router-dom'
 import placeholderImage from "../assets/placeholder.jpeg"
 import { useCategories } from '../context/CategoriesContext';
-import { useCart } from "../context/CartContext";
 
 const ProductCard = ({product}) => {
 
   const {_id, images, name, price, category} = product;
   const imageUrl = images[0] || placeholderImage;
   const {categories} = useCategories();
-  const { handleBuyNow, clearBuyNowItem} = useCart();
+ 
   const navigate = useNavigate();
   
   const categoryName = categories.find((cat)=>cat?._id===category)?.name;
@@ -21,26 +20,33 @@ const ProductCard = ({product}) => {
 
   return (
     <Link to={`/product/${_id}`} title="Click to view details">
-      <div className="py-2 rounded-lg shadow-xl h-80 sm:h-72 transition-transform duration-300 hover:scale-105 overflow-hidden">
-          <img src={imageUrl} alt={name} className="w-full h-44 object-contain mb-2"/>
-          <div className='flex-1 px-4 flex flex-col sm:flex-row justify-between sm:items-end'>   
-              <div> 
-                <div className='flex gap-1 items-end'>
-                    <h3 className="text-xl font-semibold">{name}</h3>
-                    <h5 className='hidden xl:block text-gray-700'>({categoryName})</h5>
-                </div>
-                <h4 className="text-2xl font-bold text-gray-700 mt-1">
-                   {
-                      new Intl.NumberFormat("en-IN", {
-                        style: "currency",
-                        currency: "INR"
-                      }).format(price)
-                    }  
-                </h4> 
-              </div>    
-              <button onClick={onBuyNow} className="px-4 py-2 bg-green-600 text-white rounded-xl mt-2 sm:mt-0 cursor-pointer">
-                Buy Now
-              </button>      
+      <div className="flex flex-col h-full bg-white rounded-lg shadow-xl overflow-hidden transition-transform duration-300 hover:scale-105">
+          <div
+            className="w-full bg-center bg-cover rounded-t-lg aspect-[4/3]"
+            style={{ backgroundImage: `url(${imageUrl})` }}
+          ></div>
+          <div className='flex-1 px-4 py-2 flex flex-col justify-between'>  
+
+              <h3 className="text-base sm:text-lg font-semibold line-clamp-2 leading-tight">{name}</h3>
+              { name.length <= 30 && categoryName && (
+                <h5 className='text-sm text-gray-700 line-clamp-1 leading-tight'>
+                  ({categoryName})
+                </h5>
+              )}
+
+              <div className='flex justify-between items-center mt-2 sm:mt-3'> 
+                <h4 className="text-base sm:text-lg font-semibold text-gray-700">
+                    {
+                        new Intl.NumberFormat("en-IN", {
+                          style: "currency",
+                          currency: "INR"
+                        }).format(price)
+                      }  
+                </h4>   
+                <button onClick={onBuyNow} className="px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white rounded-xl transition-colors text-sm sm:text-base cursor-pointer whitespace-nowrap max-w-[60%]">
+                  Buy Now
+                </button>    
+              </div>  
           </div>
       </div>
     </Link>

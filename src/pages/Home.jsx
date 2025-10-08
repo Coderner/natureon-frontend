@@ -43,7 +43,7 @@ const Home = () => {
                 ) : products.length === 0 ? (
                   <p className="text-center text-gray-500">No products to display</p>
                 ) : (
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                  <div className="grid grid-cols-2 sm:grid-cols-[repeat(auto-fit,minmax(150px,1fr))] md:grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-3">
                     {products.map((product) => (
                       <ProductCard key={product._id} product={product} />
                     ))}
