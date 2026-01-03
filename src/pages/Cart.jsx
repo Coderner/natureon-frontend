@@ -88,9 +88,17 @@ const CartPage = () => {
                 }
           </p>
 
-          <Link to="/checkout">
-            <button className="w-2/3 bg-green-600 text-white font-semibold px-6 py-2 rounded-2xl hover:bg-green-700 hover:cursor-pointer">
-              Proceed to Checkout
+          <Link to={cartItems.length>0 ? "/checkout" : "#"}>
+          <button
+              className={`w-2/3 px-6 py-2 rounded-2xl font-semibold ${
+                cartItems.length > 0
+                  ? "bg-green-600 text-white hover:bg-green-700 cursor-pointer"
+                  : "bg-gray-400 text-gray-200 cursor-not-allowed"
+              }`}
+              disabled={cartItems.length === 0}
+              title={cartItems.length === 0 ? "Add items to cart to proceed" : ""}
+            >              
+               Proceed to Checkout
             </button>
           </Link>
         </div>

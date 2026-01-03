@@ -31,14 +31,15 @@ export const CartProvider = ({ children }) => {
     setCartItems(prev => prev.filter(item => item._id !== id));
   };
 
-  const updateQuantity = (id, delta=1) => {
-    setCartItems(prev =>
-      prev.map(item =>
-        item._id === id
-          ? { ...item, quantity: Math.max(1, item.quantity + delta) }
-          : item
-      )
-    );
+  const updateQuantity = (id, delta) => {
+  setCartItems(prev =>
+    prev.flatMap(item => {
+      if (item._id !== id) return item;
+
+      const newQty = item.quantity + delta;
+      return newQty <= 0 ? [] : { ...item, quantity: newQty };
+    })
+  );
   };
 
   const clearCart = () => {

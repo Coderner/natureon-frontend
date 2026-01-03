@@ -53,12 +53,12 @@ const Products = () => {
       <div className="px-6">
           <div className='flex justify-between items-center py-1 border-b-2 border-gray-200 mb-8'>
                 <h2 className="text-3xl font-bold mb-1">Explore Our Latest Collection</h2>
-                <input 
+                {/* <input 
                   type="range"
                   min={0}
                   max={1000}
                   step={100}
-                />
+                /> */}
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
