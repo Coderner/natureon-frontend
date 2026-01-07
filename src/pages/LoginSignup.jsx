@@ -1,18 +1,23 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { adminLogin } from "../../api/adminApi";
-import { useAdmin } from "../../context/AdminContext";
+import { useNavigate, useLocation } from "react-router-dom";
+import { login, signup} from "../api/authApi";
+import { useAuth } from "../context/AuthContext";
 
-const AdminLogin = () => {
+const LoginSignup = () => {
   const navigate = useNavigate();
-  const { loginAdmin } = useAdmin();
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const [isLoginForm,setIsLoginForm] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const location = useLocation();
+  const { loginUser } = useAuth();
+
+  const from = location.state?.from || "/";
+  const infoMessage = location.state?.message;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,17 +31,17 @@ const AdminLogin = () => {
     e.preventDefault();
     try{
       setLoading(true);
-      const res = await adminLogin(formData);
+      const res = isLoginForm ? await login(formData) : await signup(formData);
       if(res.success)
       {
-        loginAdmin();
-        navigate("/"); 
+        loginUser(res.data.token);
+        navigate(from, { replace: true }); 
         setError(null);
       }else{
-        setError("Login Error: Either email or password is wrong");
+        setError("Either email or password is wrong");
       }
     }catch(err){
-        setError("Login Error: Either email or password is wrong");
+        setError("Either email or password is wrong");
     }finally{
         setLoading(false);
     }
@@ -45,8 +50,15 @@ const AdminLogin = () => {
   return (
     <div className="flex justify-center">
       <div className="p-6 w-full md:w-1/2 shadow-sm rounded-2xl mt-20 bg-white">
+        {infoMessage && (
+          <div className="mb-4 p-3 rounded-xl bg-yellow-100 text-yellow-800 text-sm">
+            {infoMessage}
+          </div>
+        )}
         <div className="border-b border-green-700 mb-4 pb-2">
-          <h1 className="text-2xl font-bold text-gray-600">Login as Seller</h1>
+          <h1 className="text-2xl font-bold text-gray-600">
+            {isLoginForm?"Login":"Signup"}
+          </h1>
         </div>
         <form className="w-full py-2 space-y-4" onSubmit={handleSubmit}>
           <div>
@@ -82,12 +94,26 @@ const AdminLogin = () => {
             disabled={loading}
             className={`bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition w-full ${loading ? "opacity-50 cursor-not-allowed" : "hover:cursor-pointer hover:bg-green-600"}`}
           >
-            {loading ? "Logging in..." : "Login"}
+            {isLoginForm?"Login":"Signup"}
           </button>
+          <div className="flex gap-1">
+              <div>{isLoginForm? "New User? " : "Already have an account? "}</div>
+              <button 
+                onClick={()=>{
+                   setIsLoginForm(prev => !prev)
+                   setFormData({ email: "", password: "" });
+                   setError(null);
+                }} 
+                className="text-blue-600 underline cursor-pointer"
+                type="button"
+              >
+                {isLoginForm ? "Signup": "Login"}
+              </button>
+          </div>
         </form>
       </div>
     </div>
   );
 };
 
-export default AdminLogin;
+export default LoginSignup;

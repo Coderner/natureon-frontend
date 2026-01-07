@@ -50,9 +50,9 @@ const Navbar = () => {
         {!isAdmin ? (
           <button
             className="px-2 py-1 bg-green-600 text-white rounded-lg cursor-pointer"
-            onClick={() => navigate("/admin/login")}
+            onClick={() => navigate("/auth")}
           >
-            Seller Login
+            Login
           </button>
         ) : (
           <button

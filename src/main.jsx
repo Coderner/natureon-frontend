@@ -6,17 +6,20 @@ import { BrowserRouter } from 'react-router-dom'
 import { CategoriesProvider } from './context/CategoriesContext.jsx'
 import { CartProvider } from './context/CartContext.jsx'
 import { AdminProvider } from './context/AdminContext.jsx'
+import { AuthProvider } from './context/AuthContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
-      <CategoriesProvider>
-        <CartProvider>
-          <AdminProvider>
-            <App />
-          </AdminProvider>
-        </CartProvider>
-      </CategoriesProvider>
+      <AuthProvider>
+          <CategoriesProvider>
+            <CartProvider>
+              <AdminProvider>
+                <App />
+              </AdminProvider>
+            </CartProvider>
+          </CategoriesProvider>
+      </AuthProvider>
     </BrowserRouter>
   </StrictMode>,
 )

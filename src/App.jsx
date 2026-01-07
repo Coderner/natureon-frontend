@@ -8,7 +8,7 @@ import Cart from './pages/Cart';
 import AdminLayout from './layouts/AdminLayout';
 import ProductForm from './pages/admin/ProductForm';
 import Checkout from './pages/Checkout';
-import AdminLogin from './pages/admin/AdminLogin';
+import LoginSignup from './pages/LoginSignup';
 
 function App() {
 
@@ -22,11 +22,11 @@ function App() {
           <Route path="/product/:id" element={<ProductDetails/>}/>
           <Route path="/cart" element={<Cart/>}/>
           <Route path="/checkout" element={<Checkout/>}/>
+          <Route path="/auth" element={<LoginSignup/>}/>
       </Route>
 
       {/* Admin Routes */}
       <Route path="/admin" element={<AdminLayout />}>
-        <Route path="login" element={<AdminLogin/>}/>
         <Route path="upload-product" element={<ProductForm />} />      
       </Route>
 

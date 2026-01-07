@@ -1,6 +1,9 @@
 import QuantityUpdateButton from '../components/QuantityUpdateButton';
 import { Link } from 'react-router-dom';
 import { useCart } from "../context/CartContext";
+import placeholderImage from "../assets/placeholder.jpeg";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 
 const CartPage = () => {
@@ -8,6 +11,24 @@ const CartPage = () => {
 
   const totalAmount = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
   console.log(cartItems);
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
+
+  const handleProceedToCheckout = () => {
+  if (cartItems.length === 0) return;
+
+  if (!isAuthenticated) {
+    navigate("/auth", {
+      state: {
+        from: "/cart",
+        message: "Please log in or sign up to proceed to checkout"
+      }
+    });
+    return;
+  }
+
+  navigate("/checkout");
+  };
 
   return (
     <div className="px-6 py-8">
@@ -29,7 +50,14 @@ const CartPage = () => {
             <div key={item._id} className="flex justify-between items-start gap-4 shadow-sm p-4 rounded-lg">
               
               <div className='w-11/12 flex flex-wrap justify-between items-start'>
-                  <img src={item?.images[0]} alt={item?.name} className="w-24 h-24 object-cover rounded" />
+                  <img 
+                    src={item?.images[0]} 
+                    alt={item?.name} 
+                    className="w-24 h-24 object-cover rounded" 
+                    onError={(e) => {
+                      e.currentTarget.src = placeholderImage;
+                    }}
+                  />
 
                   <div className='flex flex-col'>
                     <h3 className="text-2xl font-bold">{item?.name}</h3>
@@ -88,7 +116,6 @@ const CartPage = () => {
                 }
           </p>
 
-          <Link to={cartItems.length>0 ? "/checkout" : "#"}>
           <button
               className={`w-2/3 px-6 py-2 rounded-2xl font-semibold ${
                 cartItems.length > 0
@@ -97,10 +124,10 @@ const CartPage = () => {
               }`}
               disabled={cartItems.length === 0}
               title={cartItems.length === 0 ? "Add items to cart to proceed" : ""}
+              onClick={handleProceedToCheckout}
             >              
                Proceed to Checkout
             </button>
-          </Link>
         </div>
       </div>
     </div>

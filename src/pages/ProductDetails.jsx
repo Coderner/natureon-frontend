@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useEffect, useState} from 'react';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import BreadCrumb from '../components/BreadCrumb';
 import QuantityUpdateButton from '../components/QuantityUpdateButton';
 import { getProductById } from '../api/productApi';
@@ -7,6 +7,7 @@ import Spinner from "../components/Spinner";
 import placeholderImage from "../assets/placeholder.jpeg"
 import { useCategories } from "../context/CategoriesContext";
 import { useCart } from "../context/CartContext";
+import { useAuth } from '../context/AuthContext';
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -17,7 +18,18 @@ const ProductDetails = () => {
   const [error, setError] = useState(null);
   const {categories} = useCategories();
   const { addToCart } = useCart();
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
 
+  const onBuyNow = (e) => {
+    e.preventDefault(); 
+    e.stopPropagation();
+    if (!isAuthenticated) {
+    navigate("/auth", {state: { from: `/product/${id}`, message: "Please log in or sign up to continue with your purchase!" },});
+    return;
+  }
+    navigate("/checkout", { state: { buyNowProduct: { ...product, quantity: 1 } } });
+  };
 
   const categoryName = categories.find((cat)=>cat?._id===product?.category)?.name;
   
@@ -27,7 +39,7 @@ const ProductDetails = () => {
         const res = await getProductById(id);
         console.log(res);
         setProduct(res?.data);
-        setSelectedImage(res?.data?.images[0] || placeholderImage);
+        setSelectedImage(res?.data?.images[0]);
         setError(null);
     }catch(err){
         setProduct({});
@@ -67,6 +79,9 @@ const ProductDetails = () => {
                       src={selectedImage} 
                       alt={product?.name} 
                       className=" h-72 md:h-96 rounded-lg shadow-sm object-contain" 
+                      onError={(e) => {
+                        e.currentTarget.src = placeholderImage;
+                      }}
                   />
                   <div className="flex md:flex-col gap-4">
                     {product?.images?.map((img, index) => (
@@ -79,6 +94,9 @@ const ProductDetails = () => {
                           src={img} 
                           alt={`Product ${index + 1}`} 
                           className="h-20 md:h-28 w-20 md:w-28 object-cover hover:cursor-pointer" 
+                          onError={(e) => {
+                            e.currentTarget.src = placeholderImage;
+                          }}
                         />
                       </button>
                     ))}
@@ -106,10 +124,18 @@ const ProductDetails = () => {
                    to="/cart"
                    onClick={() => addToCart(product, quantity)}
                 >
-                    <button className="w-2/3 bg-green-600 text-white font-semibold px-6 py-2 rounded-2xl hover:bg-green-700 hover:cursor-pointer">
+                    <button 
+                      className="w-2/3 bg-green-600 text-white font-semibold px-6 py-2 rounded-2xl hover:bg-green-700 hover:cursor-pointer"
+                    >
                       Add to Cart
                     </button>
                 </Link>
+                 <button 
+                     onClick={onBuyNow} 
+                     className="w-2/3 bg-green-700 text-white font-semibold px-6 py-2 rounded-2xl hover:bg-green-600 hover:cursor-pointer"
+                  >
+                  Buy Now
+                </button>  
               </div>
 
             </div>
